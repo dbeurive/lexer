@@ -1,0 +1,26 @@
+{
+  "name": "dbeurive/lexer",
+  "description": "This project implements a simple lexer.",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Denis BEURIVE",
+      "email": "dbeurive.github@gmail.com"
+    }
+  ],
+  "keywords": ["tokenizer", "parser", "lexer"],
+  "autoload": {
+    "psr-4": {
+      "dbeurive\\Lexer\\": "src"
+    }
+  },
+  "archive": {
+    "exclude": ["/tests", "/examples", "/doc", "/README.md"]
+  },
+  "require": {
+  },
+  "require-dev": {
+    "phpdocumentor/phpdocumentor": "2.*",
+    "phpunit/phpunit": "5.5.*"
+  }
+}
