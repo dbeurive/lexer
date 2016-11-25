@@ -67,6 +67,7 @@ class Lexer
      *        - Third element: an optional callback function.
      *          The signature of this function must be:
      *          null|string function(array $inMatches)
+     * @throws \Exception
      */
     public function __construct(array $inSpecifications)
     {
@@ -94,9 +95,15 @@ class Lexer
 
             array_shift($matches);
             $matches[0] = '^';
+            $regexp = '/' . array_shift($matches) . implode('/', $matches);
+            
+            // Sanity check.
+            if (1 === preg_match($regexp, '')) {
+                throw new \Exception("Invalid regular expression \"$regexp\". This expression matches an empty string! This may produces infinite loops!");
+            }
 
             $this->__specifications[] = array(
-                '/' . array_shift($matches) . implode('/', $matches),
+                $regexp,
                 $_specification[self::INDEX_TYPE],
                 $_specification[self::INDEX_TRANSFORMER]
             );
@@ -116,7 +123,8 @@ class Lexer
         $result = array();
         $match  = null;
 
-        do {
+        while(0 != strlen($inString)) {
+            $found = false;
 
             foreach ($this->__specifications as $_specification) {
                 $matches = array();
@@ -128,25 +136,24 @@ class Lexer
                 $transformer = $_specification[self::INDEX_TRANSFORMER];
 
                 if (1 === preg_match($regexp, $inString, $matches)) {
+                    $found = true;
                     $match = $matches[0];
                     $token = new Token();
                     $token->value = call_user_func($transformer, $matches);
-                    if (is_null($token->value)) {
-                        continue;
+                    if (! is_null($token->value)) {
+                        $token->type = $type;
+                        $result[] = $token;
                     }
-                    $token->type = $type;
-                    $result[] = $token;
                     break;
                 }
             }
 
-            if (is_null($match)) {
-                throw new \Exception("Invalid input: $inString");
+            if (! $found) {
+                throw new \Exception("Invalid input: \"$inString\"");
             }
 
             $inString = substr($inString, strlen($match));
-
-        } while(0 != strlen($inString));
+        };
 
         return $result;
     }

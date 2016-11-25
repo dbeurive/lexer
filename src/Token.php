@@ -52,4 +52,15 @@ class Token
     public $value = null;
     /** @var null|string Token's type. */
     public $type = null;
+
+    /**
+     * Token constructor.
+     * @param string $inOptValue The token's value.
+     * @param string $inOptType The token's type.
+     */
+    public function __construct($inOptValue=null, $inOptType=null)
+    {
+        $this->value = $inOptValue;
+        $this->type  = $inOptType;
+    }
 }
