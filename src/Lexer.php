@@ -60,13 +60,13 @@ class Lexer
     /**
      * Lexer constructor.
      * @param array $inSpecifications This array represents the tokens specifications.
-     *        Each element of this array is an associative array that specifies a token.
+     *        Each element of this array is an array that specifies a token.
      *        It contains 2 or 3 elements.
      *        - First element: a regular expression that describes the token.
      *        - Second element: the name of the token.
      *        - Third element: an optional callback function.
      *          The signature of this function must be:
-     *          null|string function(array $inMatches)
+     *          null|mixed function(array $inMatches)
      * @throws \Exception
      */
     public function __construct(array $inSpecifications)
@@ -78,8 +78,13 @@ class Lexer
         /** @var array $_specification */
         foreach ($inSpecifications as $_index => $_specification) {
 
-            if ((2 != count($_specification)) && (3 != count($_specification))) {
-                throw new \Exception("Invalid specification number ${_index}.");
+            if (! is_array($_specification)) {
+                throw new \Exception("Invalid token specification index ${_index}: token specification must be an array (array(regexp, name, [processor])).");
+            }
+
+            $count = count($_specification);
+            if ((2 != $count) && (3 != $count)) {
+                throw new \Exception("Invalid token specification index ${_index}: invalid number of element (${count}).");
             }
 
             if (2 == count($_specification)) {
@@ -96,7 +101,7 @@ class Lexer
             array_shift($matches);
             $matches[0] = '^';
             $regexp = '/' . array_shift($matches) . implode('/', $matches);
-            
+
             // Sanity check.
             if (1 === preg_match($regexp, '')) {
                 throw new \Exception("Invalid regular expression \"$regexp\". This expression matches an empty string! This may produces infinite loops!");
