@@ -5,8 +5,7 @@
 //    This work is licensed under the Creative Commons Attribution 3.0
 //    Unported License.
 //
-//    A summary of the license is given below, followed by the full legal
-//    text.
+//    A summary of the license is given below.
 //
 //    --------------------------------------------------------------------
 //
