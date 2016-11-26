@@ -65,7 +65,7 @@ The array passed to the function comes from the processing of the regular expres
 
 * The first element of the array contains the text that matches the full pattern.
 * The second element of the array contains the text that matched the first captured parenthesized subpattern.
-* The second element of the array contains the text that matched the second captured parenthesized subpattern.
+* The third element of the array contains the text that matched the second captured parenthesized subpattern.
 * ... and so on.
 
 > See the description for the PHP function `preg_match()`.
