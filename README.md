@@ -63,11 +63,11 @@ The signature of the optional third element (`<transformer callback>`) must be:
 
     mixed|null function(array $inMatches)
 
-The array passed to the function comes from the processing of the regular expression that describes the token.
+The array (`$inMatches`) passed to the function comes from the processing of the regular expression that describes the token.
 
-* The first element of the array contains the text that matches the full pattern.
-* The second element of the array contains the text that matched the first captured parenthesized subpattern.
-* The third element of the array contains the text that matched the second captured parenthesized subpattern.
+* The first element of the array (`$inMatches[0]`) contains the text that matches the full pattern.
+* The second element of the array (`$inMatches[1]`) contains the text that matched the first captured parenthesized subpattern.
+* The third element of the array (`$inMatches[2]`) contains the text that matched the second captured parenthesized subpattern.
 * ... and so on.
 
 > See the description for the PHP function `preg_match()`.
@@ -75,7 +75,7 @@ The array passed to the function comes from the processing of the regular expres
 * If the function returns the value `null`, then the detected token is "ignored".
   That is: it will not be inserted into the list of extracted tokens.
 * If the function returns a non-null value, then the token is inserted in the list of detected tokens.
-  The value of the inserted token will be the value returned by the function.
+  The value of the inserted token will be the value returned by the function (`<transformer callback>`).
 
 # API
 
