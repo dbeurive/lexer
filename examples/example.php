@@ -15,13 +15,13 @@ $varProcessor = function(array $inMatches) {
 };
 
 $tokens = array(
-    array('/[0-9]+/',               'numeric'),
-    array('/\$([lg])([a-z0-9]+)/i', 'variable', $varProcessor),
-    array('/[a-z]{2,}/i',           'function'),
-    array('/(\+|\-|\*|\/)/',        'operator'),
-    array('/\(/',                   'open_bracket'),
-    array('/\)/',                   'close_bracket'),
-    array('/(\s+|\r?\n)/',          'blank', function(array $m) { return null; })
+    array('/[0-9]+/',                'numeric'),
+    array('/\\$([lg])([a-z0-9]+)/i', 'variable', $varProcessor),
+    array('/[a-z]{2,}/i',            'function'),
+    array('/(\\+|\\-|\\*|\\/)/',     'operator'),
+    array('/\\(/',                   'open_bracket'),
+    array('/\\)/',                   'close_bracket'),
+    array('/(\\s+|\\r?\\n)/',        'blank', function(array $m) { return null; })
 );
 
 try {

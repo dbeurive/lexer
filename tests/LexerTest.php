@@ -19,14 +19,14 @@ class LexerTest extends PHPUnit_Framework_TestCase
 
     public function setUp() {
         $tokens = array(
-            array('/VG\d+S/',       self::TYPE_SPECIAL),
-            array('/VG\d+/',        self::TYPE_GLOBAL),
-            array('/VL\d+/',        self::TYPE_LOCAL),
-            array('/[a-z]{2,}/',    self::TYPE_FUNCTION),
-            array('/\+/',           self::TYPE_OPERAOR_PLUS),
-            array('/\-/',           self::TYPE_OPERAOR_MINUS),
-            array('/(\(|\))/',      self::TYPE_BRACKET),
-            array('/\s+/',          self::TYPE_WHITE, function(array $m) { return null; })
+            array('/VG\\d+S/',       self::TYPE_SPECIAL),
+            array('/VG\\d+/',        self::TYPE_GLOBAL),
+            array('/VL\\d+/',        self::TYPE_LOCAL),
+            array('/[a-z]{2,}/',     self::TYPE_FUNCTION),
+            array('/\\+/',           self::TYPE_OPERAOR_PLUS),
+            array('/\\-/',           self::TYPE_OPERAOR_MINUS),
+            array('/(\\(|\\))/',     self::TYPE_BRACKET),
+            array('/\\s+/',          self::TYPE_WHITE, function(array $m) { return null; })
         );
         $this->__lexer = new Lexer($tokens);
     }
