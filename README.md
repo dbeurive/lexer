@@ -4,6 +4,18 @@ This repository contains the implementation of a basic lexer.
 
 A lexer explodes a given string into a list of tokens.
 
+# Installation
+
+From the command line:
+
+    composer require dbeurive\lexer
+
+If you want to include this package to your project, then edit your file `composer.json` and add the following entry:
+
+    "require": {
+        "dbeurive/lexer": "*"
+    }
+
 # Synopsis
 
 ```php
