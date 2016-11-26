@@ -59,7 +59,7 @@ Each token specification is an array that contains 2 or 3 elements.
 * The second element is a name that identifies the type of the token.
 * The optional third element is a function that is applied to the token's value before it is returned.
 
-The signature of the optional third element must be:
+The signature of the optional third element (`<transformer callback>`) must be:
 
     mixed|null function(array $inMatches)
 
