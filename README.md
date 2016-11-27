@@ -71,6 +71,11 @@ Each token specification is an array that contains 2 or 3 elements.
 * The second element is a name that identifies the type of the token.
 * The optional third element is a function that is applied to the token's value before it is returned.
 
+> **WARNING**
+>
+> Make sure to double all characters "`\`" within the regular expressions that define the tokens.
+> That is: `'/\s/'` becomes `'/\\s/'.`
+
 The signature of the optional third element (`<transformer callback>`) must be:
 
     mixed|null function(array $inMatches)
