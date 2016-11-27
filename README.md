@@ -55,6 +55,8 @@ If you want to include this package to your project, then edit your file `compos
 
 # Specifications
 
+## Description
+
 The lexer is configured by a list of tokens specifications:
 
     array(
@@ -93,6 +95,95 @@ The array (`$inMatches`) passed to the function comes from the processing of the
   That is: it will not be inserted into the list of extracted tokens.
 * If the function returns a non-null value, then the token is inserted in the list of detected tokens.
   The value of the inserted token will be the value returned by the function (`<transformer callback>`).
+
+## Very important note
+
+Be aware that the order of declarations of the tokens is important.
+
+The [example 2](examples/example2.php) illustrates this point.
+
+```php
+    use dbeurive\Lexer\Lexer;
+    use dbeurive\Lexer\Token;
+    
+    $text = 'AAAA AA';
+    
+    // ---------------------------------------------------------
+    // TEST 1
+    // ---------------------------------------------------------
+    
+    $specifications = array(
+        array('/AA/',                    'type A2'),
+        array('/A/',                     'type A1'),
+        array('/(\\s+|\\r?\\n)/',        'blank', function(array $m) { return null; })
+    );
+    
+    try {
+        $lexer = new Lexer($specifications);
+        $tokens = $lexer->lex($text);
+    } catch (\Exception $e) {
+        print "ERROR: " . $e->getMessage() . "\n";
+        exit(1);
+    }
+    
+    print "Test1: $text\n\n";
+    dumpToken($tokens);
+    print "\n";
+    
+    // ---------------------------------------------------------
+    // TEST 2
+    // ---------------------------------------------------------
+    
+    $specifications = array(
+        array('/A/',                     'type A1'),
+        array('/AA/',                    'type A2'),
+        array('/(\\s+|\\r?\\n)/',        'blank', function(array $m) { return null; })
+    );
+    
+    try {
+        $lexer = new Lexer($specifications);
+        $tokens = $lexer->lex($text);
+    } catch (\Exception $e) {
+        print "ERROR: " . $e->getMessage() . "\n";
+        exit(1);
+    }
+    
+    print "Test2: $text\n\n";
+    dumpToken($tokens);
+    
+    exit(0);
+    
+    function dumpToken(array $inTokens) {
+        $max = 0;
+    
+        /** @var Token $_token */
+        foreach ($inTokens as $_token) {
+            $max = strlen($_token->type) > $max ? strlen($_token->type) : $max;
+        }
+    
+        /** @var Token $_token */
+        foreach ($inTokens as $_token) {
+            printf("%${max}s %s\n", $_token->type, $_token->value);
+        }
+    }
+```
+
+The result is:
+
+    Test1: AAAA AA
+    
+    type A2 AA
+    type A2 AA
+    type A2 AA
+    
+    Test2: AAAA AA
+    
+    type A1 A
+    type A1 A
+    type A1 A
+    type A1 A
+    type A1 A
+    type A1 A
 
 # API
 
